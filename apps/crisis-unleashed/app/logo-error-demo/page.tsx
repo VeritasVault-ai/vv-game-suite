@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { LogoVariant } from "@/components/logo-system/logo-variant"
+// Import directly from component file instead of barrel file
+import LogoVariant from "@/components/logo-system/logo-variant"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -20,7 +21,7 @@ function BuggyLogo({ shouldError = false }: { shouldError?: boolean }) {
     throw new Error("This is an intentional error to demonstrate the error boundary")
   }
 
-  return <LogoVariant variant="animated" size="xl" className="mx-auto" interactive={true} />
+  return <LogoVariant variant="standard" size="xl" className="mx-auto" interactive={true} animated={true} />
 }
 
 /**
@@ -96,18 +97,18 @@ export default function LogoErrorDemo() {
                   </div>
 
                   <div className="flex flex-col items-center">
-                    <p className="text-sm font-medium mb-2">Compact</p>
-                    <LogoVariant variant="compact" size="md" />
+                    <p className="text-sm font-medium mb-2">Horizontal</p>
+                    <LogoVariant variant="horizontal" size="md" />
                   </div>
 
                   <div className="flex flex-col items-center">
-                    <p className="text-sm font-medium mb-2">Icon Only</p>
-                    <LogoVariant variant="icon-only" size="md" />
+                    <p className="text-sm font-medium mb-2">Icon</p>
+                    <LogoVariant variant="icon" size="md" />
                   </div>
 
                   <div className="flex flex-col items-center">
-                    <p className="text-sm font-medium mb-2">Text Only</p>
-                    <LogoVariant variant="text-only" size="md" />
+                    <p className="text-sm font-medium mb-2">Minimal</p>
+                    <LogoVariant variant="minimal" size="md" />
                   </div>
                 </div>
               </CardContent>
@@ -130,7 +131,7 @@ export default function LogoErrorDemo() {
               <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-md">
                 <pre className="text-sm overflow-x-auto">
                   {`import { LogoErrorBoundary } from "@/components/error-boundaries/logo-error-boundary";
-import { LogoVariant } from "@/components/logo-system/logo-variant";
+import LogoVariant from "@/components/logo-system/logo-variant";
 
 // Basic usage (already included in LogoVariant component)
 <LogoErrorBoundary>
@@ -143,7 +144,7 @@ import { LogoVariant } from "@/components/logo-system/logo-variant";
   showRetry={true}
   showError={true}
 >
-  <LogoVariant variant="animated" size="xl" />
+  <LogoVariant animated size="xl" />
 </LogoErrorBoundary>`}
                 </pre>
               </div>

@@ -4,8 +4,8 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, ChevronRight, ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
-// Update import to use the consolidated structure
-import { LogoVariant } from "@/components/logo-system"
+// Import directly from component file instead of barrel file
+import LogoVariant from "@/components/logo-system/logo-variant"
 
 interface NewUserWelcomeProps {
   onClose: () => void

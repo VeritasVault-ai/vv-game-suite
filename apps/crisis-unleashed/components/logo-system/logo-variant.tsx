@@ -2,6 +2,13 @@
 
 import { cn } from "@/lib/utils"
 import { FactionId, getFactionColor, getFactionSecondaryColor } from "./utils"
+import { 
+  renderStandardVariant,
+  renderIconVariant,
+  renderHorizontalVariant,
+  renderVerticalVariant,
+  renderMinimalVariant 
+} from "./variants"
 
 // Define types
 export type LogoSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "full"
@@ -19,7 +26,7 @@ export interface LogoVariantProps {
   /**
    * The variant of the logo to display
    */
-  variant?: "standard" | "icon" | "horizontal" | "vertical" | "minimal";
+  variant?: "standard" | "icon" | "horizontal" | "vertical" | "minimal" | "animated";
   /**
    * The size of the logo
    */
@@ -137,9 +144,8 @@ export default function LogoVariant({
       case "minimal":
         return renderMinimalVariant(faction, primaryColor, secondaryColor, pixelSize);
       
--      case "standard":
--      default:
-+      default:
+      case "standard":
+      default:
         return renderStandardVariant(
           faction, 
           primaryColor, 
@@ -188,282 +194,4 @@ function getFactionTagline(faction: FactionId): string {
     default:
       return "";
   }
-}
-
-/**
- * Renders the standard logo variant with the faction name and an optional tagline.
- *
- * Displays the faction name in a styled block using the provided primary and secondary colors, with the tagline shown below if specified.
- *
- * @param faction - The faction identifier to display.
- * @param primaryColor - The primary color for text and accents.
- * @param secondaryColor - The background color for the logo block.
- * @param size - The overall size of the logo, in pixels or percentage.
- * @param tagline - Optional tagline text to display below the logo.
- * @returns A React element representing the standard logo variant.
- */
-function renderStandardVariant(
-  faction: FactionId, 
-  primaryColor: string, 
-  secondaryColor: string, 
-  size: number | string, 
-  tagline: string | null
-) {
-  // Convert size to number for calculations if it's not a percentage
-  const numSize = typeof size === "string" && size.includes("%") 
-    ? parseInt(size) 
-    : Number(size);
-  
-  return (
-    <div className="logo-standard flex flex-col items-center">
-      {/* Logo content - placeholder for actual logo implementation */}
-      <div 
-        className="logo-main"
-        style={{ 
-          color: primaryColor,
-          backgroundColor: secondaryColor,
-          width: size,
-          height: typeof numSize === "number" ? numSize * 0.8 : size,
-          borderRadius: "4px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontWeight: "bold"
-        }}
-      >
-        {faction.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-      </div>
-      
-      {/* Tagline */}
-      {tagline && (
-        <div 
-          className="tagline mt-1 text-center"
-          style={{ 
-            color: primaryColor,
-            fontSize: typeof numSize === "number" ? `${numSize * 0.1}px` : "10px",
-            fontWeight: "500",
-            letterSpacing: "0.05em"
-          }}
-        >
-          {tagline}
-        </div>
-      )}
-    </div>
-  );
-}
-
-/**
- * Renders a horizontal logo variant with an icon, faction name, and optional tagline.
- *
- * @param faction - The faction identifier to display.
- * @param primaryColor - The primary color used for text and icon foreground.
- * @param secondaryColor - The secondary color used for the icon background.
- * @param size - The overall size of the logo in pixels or percentage.
- * @param tagline - Optional tagline text to display below the faction name.
- *
- * @returns A React element representing the horizontal logo variant.
- */
-function renderHorizontalVariant(
-  faction: FactionId, 
-  primaryColor: string, 
-  secondaryColor: string, 
-  size: number | string, 
-  tagline: string | null
-) {
-  // Convert size to number for calculations if it's not a percentage
-  const numSize = typeof size === "string" && size.includes("%") 
-    ? parseInt(size) 
-    : Number(size);
-  
-  return (
-    <div className="logo-horizontal flex items-center">
-      {/* Logo icon */}
-      <div 
-        className="logo-icon"
-        style={{ 
-          color: primaryColor,
-          backgroundColor: secondaryColor,
-          width: typeof numSize === "number" ? numSize * 0.8 : size,
-          height: typeof numSize === "number" ? numSize * 0.8 : size,
-          borderRadius: "4px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontWeight: "bold"
-        }}
-      >
-        {faction.charAt(0).toUpperCase()}
-      </div>
-      
-      {/* Name and tagline */}
-      <div className="ml-2 flex flex-col">
-        <div 
-          className="faction-name"
-          style={{ 
-            color: primaryColor,
-            fontSize: typeof numSize === "number" ? `${numSize * 0.25}px` : "16px",
-            fontWeight: "bold",
-            lineHeight: "1"
-          }}
-        >
-          {faction.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-        </div>
-        
-        {/* Tagline */}
-        {tagline && (
-          <div 
-            className="tagline-horizontal"
-            style={{ 
-              color: primaryColor,
-              fontSize: typeof numSize === "number" ? `${numSize * 0.08}px` : "8px",
-              fontWeight: "500",
-              letterSpacing: "0.05em",
-              marginTop: "2px"
-            }}
-          >
-            {tagline}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-/**
- * Renders a vertical logo variant with an icon, faction name, and optional tagline.
- *
- * @param faction - The faction identifier to display.
- * @param primaryColor - The primary color used for text and icon foreground.
- * @param secondaryColor - The secondary color used for the icon background.
- * @param size - The overall size of the logo, in pixels or percentage.
- * @param tagline - Optional tagline text to display below the faction name.
- *
- * @returns A React element representing the vertical logo variant.
- */
-function renderVerticalVariant(
-  faction: FactionId, 
-  primaryColor: string, 
-  secondaryColor: string, 
-  size: number | string, 
-  tagline: string | null
-) {
-  // Convert size to number for calculations if it's not a percentage
-  const numSize = typeof size === "string" && size.includes("%") 
-    ? parseInt(size) 
-    : Number(size);
-  
-  return (
-    <div className="logo-vertical flex flex-col items-center">
-      {/* Logo icon */}
-      <div 
-        className="logo-icon"
-        style={{ 
-          color: primaryColor,
-          backgroundColor: secondaryColor,
-          width: size,
-          height: typeof numSize === "number" ? numSize * 0.6 : size,
-          borderRadius: "4px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontWeight: "bold"
-        }}
-      >
-        {faction.charAt(0).toUpperCase()}
-      </div>
-      
-      {/* Faction name */}
-      <div 
-        className="faction-name mt-2 text-center"
-        style={{ 
-          color: primaryColor,
-          fontSize: typeof numSize === "number" ? `${numSize * 0.15}px` : "12px",
-          fontWeight: "bold"
-        }}
-      >
-        {faction.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-      </div>
-      
-      {/* Tagline */}
-      {tagline && (
-        <div 
-          className="tagline-vertical text-center"
-          style={{ 
-            color: primaryColor,
-            fontSize: typeof numSize === "number" ? `${numSize * 0.09}px` : "8px",
-            fontWeight: "500",
-            letterSpacing: "0.05em",
-            marginTop: "2px"
-          }}
-        >
-          {tagline}
-        </div>
-      )}
-    </div>
-  );
-}
-
-/**
- * Renders a square icon logo displaying the first letter of the specified faction.
- *
- * The icon uses the provided primary color for the letter and secondary color for the background, with size and styling determined by the input parameters.
- */
-function renderIconVariant(
-  faction: FactionId, 
-  primaryColor: string, 
-  secondaryColor: string, 
-  size: number | string
-) {
-  return (
-    <div 
-      className="logo-icon"
-      style={{ 
-        color: primaryColor,
-        backgroundColor: secondaryColor,
-        width: size,
-        height: size,
-        borderRadius: "4px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontWeight: "bold"
-      }}
-    >
-      {faction.charAt(0).toUpperCase()}
-    </div>
-  );
-}
-
-/**
- * Renders a minimal logo variant displaying the first letter of the faction in the primary color.
- *
- * @param faction - The faction identifier whose initial is shown.
- * @param primaryColor - The main color used for the letter.
- * @param secondaryColor - Unused in this variant.
- * @param size - The width and height of the logo, as a number (pixels) or string (e.g., percentage).
- * @returns A React element representing the minimal logo.
- */
-function renderMinimalVariant(
-  faction: FactionId, 
-  primaryColor: string, 
-  secondaryColor: string, 
-  size: number | string
-) {
-  return (
-    <div 
-      className="logo-minimal"
-      style={{ 
-        color: primaryColor,
-        width: size,
-        height: size,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontWeight: "bold",
-        fontSize: typeof size === "number" ? `${size * 0.5}px` : "24px"
-      }}
-    >
-      {faction.charAt(0).toUpperCase()}
-    </div>
-  );
 }
